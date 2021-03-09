@@ -1,0 +1,62 @@
+<!--index.wxml-->
+<view class="bgimg">
+  <image class="bg-img"></image>
+</view>
+<view class="container" style="padding-top:{{statusBarHeight}}px">
+  <view class="title-bar">
+    <text class="title-city" style="line-height: {{navHeight}}px">{{city}}</text>
+  </view>
+  <scroll-view class="scroll-container" scroll-y="true" refresher-enabled="true" refresher-default-style="white"
+    refresher-threshold="40" refresher-triggered="{{refreshTriggered}}" bindrefresherrefresh="refresh">
+    <view class="main-container {{navbarItem[0].animation}}" hidden="{{currentPage != 1}}">
+      <view class="main-weather">
+        <view class="temperture">
+          <text>{{temp}}</text>
+          <text style="font-size: 80px;position: relative;top: 14px;margin-left: 4px;">°</text>
+        </view>
+        <text class="weather-text"><text class="weather-icon">{{weather[0].icon}}</text> {{weather[0].text}} • {{air.level}}</text>
+      </view>
+      <view class="three-day-weather">
+        <view wx:for="{{weather}}" class="single-day-weather">
+          <text class="weather-icon">{{item.icon}}</text>
+          <text class="day-weather">{{item.day}} • {{item.text}}</text>
+          <text class="day-temp"><text>{{item.max_temp}}</text>° / <text>{{item.min_temp}}</text>°</text>
+        </view>
+      </view>
+      <view class="view-more-btn btn-style" bindtap="showAndHide">
+        <text>{{hideAndShow}}七日内天气</text>
+      </view>
+      <view wx:for="{{cards}}" class="card btn-style">
+        <text class="card-title">{{item.title}}</text>
+        <text>{{item.content}}</text>
+        <text style="margin-top: 18px;font-size: 14px">{{item.description}}</text>
+      </view>
+      <view class="footer">
+        <text class="footer-text">数据更新于今天 {{updateTime}}</text>
+      </view>
+    </view>
+    <view class="main-container {{navbarItem[1].animation}}" hidden="{{currentPage != 2}}">
+      <view class="card btn-style info-card">
+        <text class="card-title">坐标</text>
+        <text>经度: {{location.latitude}}</text>
+        <text>纬度: {{location.longitude}}</text>
+      </view>
+      <view class="card btn-style info-card">
+        <text class="card-title">地址</text>
+        <text>国家: {{location.country}}</text>
+        <text>省份: {{location.province}}</text>
+        <text>城市: {{location.city}}</text>
+        <text>区/县: {{location.district}}</text>
+        <text>详细信息: {{location.details}}</text>
+      </view>
+    </view>
+  </scroll-view>
+  <view class="nav-bar">
+    <view id="nav-{{index}}" bindtap="switchTab" wx:key="index" wx:for="{{navbarItem}}" class="nav-bar-item-container">
+      <view class="nav-bar-item {{item.active}}">
+        <text class="material-icons">{{item.icon}}</text>
+        <text style="font-size: 12px">{{item.text}}</text>
+      </view>
+    </view>
+  </view>
+</view>
